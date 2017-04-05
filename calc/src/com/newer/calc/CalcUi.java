@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
  * @author xiaowenxuan
  *
  */
-public class CalcUi extends JFrame {
+public class CalcUi extends JFrame implements CalcCallbcak{
 	
 	/**
 	 * 显示计算结果
@@ -30,11 +30,26 @@ public class CalcUi extends JFrame {
 	 * 按钮
 	 */
 	private JButton[] buttons = new JButton[titles.length];
+	/**
+	 * 按钮的监听器
+	 */
+	private ButtonListner buttonListner;
 	
+	/**
+	 * 模型
+	 */
+	private Calc calc;
 	public CalcUi() {
 		initUi();
 		setVisible(true);
 		
+	}
+
+	public CalcUi(Calc calc2) {
+		this.calc = calc2;
+		buttonListner = new ButtonListner(calc2,this);
+		initUi();
+		setVisible(true);
 	}
 
 	private void initUi() {
@@ -58,16 +73,31 @@ public class CalcUi extends JFrame {
 		//添加按钮
 		JPanel buttonPanel = new JPanel(new GridLayout(5,4,2,2));
 		add(buttonPanel,BorderLayout.CENTER);
+//		buttonListner = new ButtonListner();
 		
 		for (int i = 0;i < titles.length;i++) {
 			if(titles[i].length() == 0){
 				buttonPanel.add(new JLabel());
 			}else{
 				buttons[i] = new JButton(titles[i]);
+				buttons[i].addActionListener(buttonListner);
+//				buttons[i].setActionCommand(titles[i]);
 				buttonPanel.add(buttons[i]);
 			}
 		}
 
+	}
+
+	@Override
+	public void showInput() {
+
+		lableResult.setText(calc.getInput());
+	}
+
+	@Override
+	public void showResult() {
+
+		
 	}
 	
 

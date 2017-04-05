@@ -4,7 +4,10 @@ public class App {
 
 	public static void main(String[] args) {
  
-		CalcUi frame = new CalcUi();
+		//模型
+		Calc calc = new Calc();
+		//视图
+		CalcUi frame = new CalcUi(calc);
 		
 	}
 
